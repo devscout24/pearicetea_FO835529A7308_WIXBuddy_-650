@@ -116,7 +116,7 @@ export default function Navbar() {
                                         <NavigationMenuLink asChild>
                                             <Link
                                                 to={link.href}
-                                                className="lg:px-10 text-white hover:underline transition-all duration-200 lg:text-xl font-semibold hover:bg-transparent hover:text-white py-4"
+                                                className="lg:px-10 text-white hover:underline transition-all duration-200 lg:text-xl font-semibold hover:bg-transparent hover:text-white"
                                             >
                                                 {link.name}
                                             </Link>
