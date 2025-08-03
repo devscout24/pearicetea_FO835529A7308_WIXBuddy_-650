@@ -1,10 +1,10 @@
-import Services from "./Components/Services";
+import OurService from "../OurService/Index";
 
 
 export default function Home() {
   return (
     <section>
-        <Services />
+        <OurService />
     </section>
   )
 }

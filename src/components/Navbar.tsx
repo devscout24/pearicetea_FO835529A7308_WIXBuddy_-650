@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import { Button } from "./ui/button";
 import { ChevronDown, Menu } from "lucide-react";
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList } from "./ui/navigation-menu";
 
 // We'll define the navigation links here to make them easy to manage and reuse.
@@ -26,6 +26,18 @@ export default function Navbar() {
     const [isSheetOpen, setIsSheetOpen] = useState(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
+    const location = useLocation();
+
+    // Function to check if route is active
+    const isActiveRoute = (href: string) => {
+        if (href === '/') {
+            return location.pathname === '/';
+        }
+        return location.pathname.startsWith(href);
+    };
+
+    // Check if any technology route is active
+    const isTechnologyActive = technologyLinks.some(link => isActiveRoute(link.href));
 
     // Close dropdown when clicking outside
     useEffect(() => {
@@ -68,7 +80,9 @@ export default function Navbar() {
                                         <Link
                                             key={link.name}
                                             to={link.href}
-                                            className="text-base font-medium px-5 text-white"
+                                            className={`text-base font-medium px-5 text-white transition-all duration-200 ${
+                                                isActiveRoute(link.href) ? 'bg-white !text-black' : ''
+                                            }`}
                                             onClick={() => setIsSheetOpen(false)}
                                         >
                                             {link.name}
@@ -78,7 +92,9 @@ export default function Navbar() {
                                         <div ref={dropdownRef} className="relative">
                                             <button
                                                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                                                className="px-5 text-white hover:underline transition-all duration-200 font-semibold hover:bg-transparent hover:text-white py-4 cursor-pointer flex items-center gap-1"
+                                                className={`px-5 text-white hover:underline transition-all duration-200 font-semibold hover:bg-transparent hover:text-white py-4 cursor-pointer flex items-center gap-1 ${
+                                                    isTechnologyActive ? 'bg-white !text-black' : ''
+                                                }`}
                                             >
                                                 Our technology
                                                 <ChevronDown strokeWidth={1.75} size={18} className="mt-1.5" />
@@ -116,7 +132,9 @@ export default function Navbar() {
                                         <NavigationMenuLink asChild>
                                             <Link
                                                 to={link.href}
-                                                className="lg:px-10 text-white hover:underline transition-all duration-200 lg:text-xl font-semibold hover:bg-transparent hover:text-white"
+                                                className={`lg:px-10 text-white hover:underline transition-all duration-200 lg:text-xl font-semibold hover:bg-transparent hover:text-white ${
+                                                    isActiveRoute(link.href) ? 'bg-white !text-black' : ''
+                                                }`}
                                             >
                                                 {link.name}
                                             </Link>
@@ -129,7 +147,9 @@ export default function Navbar() {
                                     <div ref={dropdownRef} className="relative">
                                         <button
                                             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                                            className="lg:px-10 text-white hover:underline transition-all duration-200 lg:text-xl font-semibold hover:bg-transparent hover:text-white py-4 cursor-pointer flex items-center gap-1"
+                                            className={`lg:px-10 text-white hover:underline transition-all duration-200 lg:text-xl font-semibold hover:bg-transparent hover:text-white py-4 cursor-pointer flex items-center gap-1 ${
+                                                isTechnologyActive ? 'bg-white !text-black' : ''
+                                            }`}
                                         >
                                             Our technology
                                             <ChevronDown strokeWidth={1.75} size={20} className="mt-1.5" />
