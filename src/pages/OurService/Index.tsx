@@ -30,7 +30,7 @@ export default function OurService() {
       }
     }
   })
-  console.log("Service data:", services);
+  // console.log("Service data:", services);
 
   return (
     <section className="py-10 px-4">

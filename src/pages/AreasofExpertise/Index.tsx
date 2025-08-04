@@ -30,7 +30,7 @@ export default function AreasOfExpertise() {
         },
     });
 
-    console.log("Expertise data:", expertises);
+    // console.log("Expertise data:", expertises);
 
     return (
         <section className="py-10 px-4">

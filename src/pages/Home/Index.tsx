@@ -1,5 +1,6 @@
 import AreasOfExpertise from "../AreasofExpertise/Index";
 import OurService from "../OurService/Index";
+import OurTechnology from "../OurTechnology/Index";
 
 
 export default function Home() {
@@ -7,6 +8,7 @@ export default function Home() {
     <section>
         <OurService />
         <AreasOfExpertise />
+        <OurTechnology />
     </section>
   )
 }
