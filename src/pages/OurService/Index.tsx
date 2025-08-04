@@ -1,5 +1,9 @@
 import CommonCard from "@/components/CommonCard";
+import CommonCardSkeleton from "@/components/CommonCardSkeleton";
 import { Button } from "@/components/ui/button";
+import useAxiosCommon from "@/hooks/useAxiousCommon";
+import type { TCommonCard } from "@/types/commonCard.type";
+import { useQuery } from "@tanstack/react-query";
 import { ChevronDown } from "lucide-react";
 import { Link, useLocation } from "react-router";
 
@@ -7,6 +11,27 @@ import { Link, useLocation } from "react-router";
 export default function OurService() {
   const location = useLocation();
   console.log("Current location:", location.pathname);
+  const axiosCommon = useAxiosCommon();
+
+
+  const { data: services = [], isLoading} = useQuery({
+    queryKey: ['services'],
+    queryFn: async () => {
+      try {
+        const { data } = await axiosCommon.get('/service/index');
+        return data.data;
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          console.error("Failed to fetch services:", err.message);
+        } else {
+          console.error("Failed to fetch services:", err);
+        }
+        return []; // Always return a value, even on error
+      }
+    }
+  })
+  console.log("Service data:", services);
+
   return (
     <section className="py-10 px-4">
       <h1 className="text-3xl md:text-4xl font-semibold text-title02 text-center md:text-left mb-7">
@@ -14,18 +39,25 @@ export default function OurService() {
       </h1>
       {/* Grid for the service cards, rendered dynamically from the serviceData array */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {location.pathname === '/' ? serviceData.slice(0, 4).map((service, index) => (
-          <CommonCard
-            key={index}
-            service={service}
-          />
-        )) : (
-          serviceData.map((service, index) => (
+        {isLoading ? (
+          // Show skeletons while loading
+          Array.from({ length: location.pathname === '/' ? 4 : 8 }).map((_, index) => (
+            <CommonCardSkeleton key={index} />
+          ))
+        ) : (
+          location.pathname === '/' ? services.slice(0, 4).map((service: TCommonCard) => (
             <CommonCard
-              key={index}
+              key={service.id}
               service={service}
             />
-          ))
+          )) : (
+            services.map((service: TCommonCard) => (
+              <CommonCard
+                key={service.id}
+                service={service}
+              />
+            ))
+          )
         )}
       </div>
       {/* 'View All' button */}
@@ -40,56 +72,3 @@ export default function OurService() {
     </section>
   )
 }
-
-
-// Sample data array to be mapped over
-const serviceData = [
-  {
-    title: "Process Development",
-    description: "Advanced modeling and simulation tools for scalable production processes."
-  },
-  {
-    title: "Techno-Economic Assessment",
-    description: "Evaluating project feasibility and economic viability for decision-making."
-  },
-  {
-    title: "Custom Model Development",
-    description: "Enhancing control of complex processes with tailored, accurate models.Enhancing control of complex processes with tailored, accurate models."
-  },
-  {
-    title: "Data-Driven Process Scale-Up",
-    description: "Scaling processes from lab to industrial scale for optimal performance."
-  },
-  {
-    title: "Process Development",
-    description: "Advanced modeling and simulation tools for scalable production processes."
-  },
-  {
-    title: "Techno-Economic Assessment",
-    description: "Evaluating project feasibility and economic viability for decision-making."
-  },
-  {
-    title: "Custom Model Development",
-    description: "Enhancing control of complex processes with tailored, accurate models.Enhancing control of complex processes with tailored, accurate models."
-  },
-  {
-    title: "Data-Driven Process Scale-Up",
-    description: "Scaling processes from lab to industrial scale for optimal performance."
-  },
-  {
-    title: "Process Development",
-    description: "Advanced modeling and simulation tools for scalable production processes."
-  },
-  {
-    title: "Techno-Economic Assessment",
-    description: "Evaluating project feasibility and economic viability for decision-making."
-  },
-  {
-    title: "Custom Model Development",
-    description: "Enhancing control of complex processes with tailored, accurate models.Enhancing control of complex processes with tailored, accurate models."
-  },
-  {
-    title: "Data-Driven Process Scale-Up",
-    description: "Scaling processes from lab to industrial scale for optimal performance."
-  },
-];
