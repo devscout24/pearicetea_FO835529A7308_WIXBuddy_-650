@@ -14,23 +14,32 @@ export default function OurService() {
   const axiosCommon = useAxiosCommon();
 
 
-  const { data: services = [], isLoading} = useQuery({
+  const { data: services = [], isLoading, error, refetch } = useQuery({
     queryKey: ['services'],
     queryFn: async () => {
       try {
         const { data } = await axiosCommon.get('/service/index');
         return data.data;
       } catch (err: unknown) {
-        if (err instanceof Error) {
-          console.error("Failed to fetch services:", err.message);
-        } else {
-          console.error("Failed to fetch services:", err);
-        }
-        return []; // Always return a value, even on error
+        console.error("Failed to fetch services:", err instanceof Error ? err.message : err);
       }
     }
   })
-  // console.log("Service data:", services);
+  // console.log("Service data:", services); 
+
+  if (error) {
+    return <div className="py-10 px-4">
+      <h1 className="text-3xl md:text-4xl font-semibold text-title02 text-center md:text-left mb-7">
+        Our Service
+      </h1>
+      <div className="flex items-center gap-5 justify-center">
+        <div className="text-red-500 text-center">{error.message}</div>
+        <Button variant="default" onClick={() => refetch()} className="cursor-pointer px-8">
+          Retry
+        </Button>
+      </div>
+    </div>
+  }
 
   return (
     <section className="py-10 px-4">

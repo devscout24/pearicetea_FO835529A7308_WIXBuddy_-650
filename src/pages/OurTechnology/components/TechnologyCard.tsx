@@ -1,8 +1,10 @@
 import type { Technology } from "@/types/expertise.type";
 import { ArrowUpRight } from "lucide-react";
+import { Link } from "react-router";
 
 
 export default function TechnologyCard({ technology }: { technology: Technology }) {
+    console.log("TechnologyCard data:", technology.image);
     return (
         <div className="bg-white rounded-lg overflow-hidden shadow-[0_0_14px_rgba(0,0,0,0.2)]">
             {/* Image */}
@@ -19,11 +21,11 @@ export default function TechnologyCard({ technology }: { technology: Technology 
                 <div>
                     <h3 className="mt-1 text-base font-semibold text-gray-900">{technology.title}</h3>
                 </div>
-                <button
+                <Link to={`/technology/show/${technology.id}`}
                     className="bg-foreground text-white p-2 rounded-full cursor-pointer"
                 >
                     <ArrowUpRight className="w-5 h-5" />
-                </button>
+                </Link>
             </div>
         </div>
     )

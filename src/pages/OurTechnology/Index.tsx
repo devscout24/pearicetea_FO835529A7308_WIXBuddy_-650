@@ -31,7 +31,6 @@ export default function OurTechnology() {
             }
         }
     });
-
     console.log("Technology data:", technologys);
 
     return (
