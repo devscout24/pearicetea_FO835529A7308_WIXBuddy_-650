@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useLoaderData } from "react-router";
 
 
@@ -13,8 +14,22 @@ interface Technology {
 }
 
 export default function TechnologyDetail() {
-      const { title, image, description } = (useLoaderData() as Technology).data.data;
-      console.log("Technology Detail:", image);
+    const { title, image, description } = (useLoaderData() as Technology).data.data;
+    console.log("Technology Detail:", title, image, description);
+    const [fullText, ] = useState<string>(description);
+    const [isExpanded, setIsExpanded] = useState<boolean>(false);
+
+    
+
+
+    const getPreviewHTML = (html: string, wordLimit: number) => {
+        const tempDiv = document.createElement("div");
+        tempDiv.innerHTML = html;
+        const textContent = tempDiv.textContent || tempDiv.innerText || "";
+        const words = textContent.split(/\s+/);
+        const truncated = words.slice(0, wordLimit).join(" ");
+        return `${truncated}...`;
+    };
 
     return (
         <div className="py-10 px-4">
@@ -36,9 +51,21 @@ export default function TechnologyDetail() {
                     />
                 </div>
 
-                <div className="prose max-w-none">
-                    <p className="text-lg text-gray-700 leading-relaxed">{description}</p>
-                </div>
+                <p className="prose max-w-none text-gray-700 leading-relaxed">
+                    <span
+                        dangerouslySetInnerHTML={{
+                            __html: isExpanded ? fullText : getPreviewHTML(fullText, 50),
+                        }}
+                    />
+                    {fullText && (
+                        <button
+                            onClick={() => setIsExpanded(!isExpanded)}
+                            className="text-blue-600 hover:underline ml-1 cursor-pointer"
+                        >
+                            {isExpanded ? "Show Less" : "Read More"}
+                        </button>
+                    )}
+                </p>
             </div>
         </div>
     )

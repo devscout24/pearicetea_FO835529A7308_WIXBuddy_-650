@@ -6,6 +6,9 @@ import OurService from "@/pages/OurService/Index";
 import TechnologyDetail from "@/pages/OurTechnology/components/TechnologyDetail";
 import { axiosCommon } from "@/hooks/useAxiousCommon";
 import { createBrowserRouter } from "react-router";
+import OurTechnology from "@/pages/OurTechnology/Index";
+import ContactUs from "@/pages/ContuctUs";
+import NewsAndHighlights from "@/pages/NewsAndHighlights/Index";
 
 
 export const router = createBrowserRouter([
@@ -27,6 +30,14 @@ export const router = createBrowserRouter([
         element: <AreasOfExpertise />
       },
       {
+        path: 'news-highlight',
+        element: <NewsAndHighlights />,
+      },
+      {
+        path: 'technology',
+        element: <OurTechnology />,
+      },
+      {
         path: 'technology/show/:id',
         element: <TechnologyDetail />,
         loader: async ({ params }) => {
@@ -39,6 +50,10 @@ export const router = createBrowserRouter([
             throw new Error("Failed to fetch technology details");
           }
         }
+      },
+      {
+        path: 'contact',
+        element: <ContactUs />,
       }
     ]
   }

@@ -3,6 +3,8 @@ import logo from "../assets/icons/logo.png";
 import circle from "../assets/icons/circle.svg";
 import dot from "../assets/icons/dot.svg";
 import angle from "../assets/icons/angle.svg";
+import pen from '../assets/icons/pen.svg';
+import physics from '../assets/icons/physics.svg';
 
 // Type definitions for better type safety
 export interface IconAssets {
@@ -10,6 +12,8 @@ export interface IconAssets {
     circle: string;
     dot: string;
     angle: string;
+    pen: string;
+    physics: string;
   [key: string]: string;
 }
 
@@ -30,6 +34,8 @@ export const icons: IconAssets = {
   circle,
   dot,
   angle,
+  pen,
+  physics,
 };
 
 // Images collection - typically larger assets used for content

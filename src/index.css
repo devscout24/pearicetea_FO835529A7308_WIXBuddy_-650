@@ -129,3 +129,8 @@
     @apply bg-background ;
   }
 }
+
+/* custom focus for input fiield */
+.custom-focus {
+  @apply text-muted-foreground placeholder:text-muted-foreground text-sm focus:ring-0 focus:ring-offset-0 focus:outline-none focus-visible:ring-0 py-5  pl-10;
+}
