@@ -4,7 +4,6 @@ import { Link } from "react-router";
 
 
 export default function TechnologyCard({ technology }: { technology: Technology }) {
-    console.log("TechnologyCard data:", technology.image);
     return (
         <div className="bg-white rounded-lg overflow-hidden shadow-[0_0_14px_rgba(0,0,0,0.2)]">
             {/* Image */}

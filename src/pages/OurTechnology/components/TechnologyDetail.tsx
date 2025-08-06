@@ -15,7 +15,6 @@ interface Technology {
 
 export default function TechnologyDetail() {
     const { title, image, description } = (useLoaderData() as Technology).data.data;
-    console.log("Technology Detail:", title, image, description);
     const [fullText, ] = useState<string>(description);
     const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
@@ -60,7 +59,7 @@ export default function TechnologyDetail() {
                     {fullText && (
                         <button
                             onClick={() => setIsExpanded(!isExpanded)}
-                            className="text-blue-600 hover:underline ml-1 cursor-pointer"
+                            className="text-foreground hover:underline ml-1 cursor-pointer"
                         >
                             {isExpanded ? "Show Less" : "Read More"}
                         </button>

@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import useAxiosCommon from "@/hooks/useAxiousCommon";
+import toast from "react-hot-toast";
 
 
 export const useFormSchema = z.object({
@@ -30,20 +31,21 @@ export default function useContactUsForm() {
 
     const handleSubmit = async (data: ContactUsValues) => {
         event?.preventDefault(); // Prevent default form submission if needed
-        console.log("Form submitted with data:", data);
+        
         try {
             // Submit the form data to your API
-            const response = await axiosCommon.post('/contact-us', data);
-            console.log("Form submission successful:", response.data);
+            await axiosCommon.post('/contact/store', data);
             
             // Reset form after successful submission
+            toast.success('Thanks for contacting us!');
             form.reset();
-            
+
             // You can add success notification here
             // toast.success("Message sent successfully!");
             
         } catch (error) {
             console.error("Form submission error:", error);
+            toast.error("Failed to send message. Please try again.");
             // Handle error (you might want to show a toast or error message)
             // toast.error("Failed to send message. Please try again.");
         }

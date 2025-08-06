@@ -10,7 +10,6 @@ import { Link, useLocation } from "react-router";
 
 export default function AreasOfExpertise() {
     const location = useLocation();
-    console.log("Current location:", location.pathname);
     const axiosCommon = useAxiosCommon();
 
     const { data: expertises = [], isLoading } = useQuery({
@@ -29,8 +28,6 @@ export default function AreasOfExpertise() {
             }
         },
     });
-
-    // console.log("Expertise data:", expertises);
 
     return (
         <section className="py-10 px-4">

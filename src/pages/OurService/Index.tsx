@@ -10,7 +10,6 @@ import { Link, useLocation } from "react-router";
 
 export default function OurService() {
   const location = useLocation();
-  console.log("Current location:", location.pathname);
   const axiosCommon = useAxiosCommon();
 
 
@@ -25,7 +24,6 @@ export default function OurService() {
       }
     }
   })
-  // console.log("Service data:", services); 
 
   if (error) {
     return <div className="py-10 px-4">

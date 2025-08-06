@@ -43,7 +43,6 @@ export const router = createBrowserRouter([
         loader: async ({ params }) => {
           try {
             const { data } = await axiosCommon.get(`/technology/show/${params.id}`);
-            console.log("Technology Detail Data:", data);
             return data;
 
           } catch {
