@@ -9,7 +9,7 @@ export default function Header() {
             <div className="flex items-center justify-between p-4">
                 <div className="flex items-center space-x-4">
                     <Link to="/">
-                        <img className="h-12 md:h-18 lg:h-28" src={icons.logo} alt="Logo" />
+                        <img className="h-12 w-14 md:h-18 lg:h-28" src={icons.logo} alt="Logo" />
                     </Link>
                     <h1 className="text-lg md:text-3xl lg:text-5xl text-white font-bold font-roboto">Innovation in the chemical, energy <br /> industries</h1>
                 </div>

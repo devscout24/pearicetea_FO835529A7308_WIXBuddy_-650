@@ -8,7 +8,6 @@ import { Outlet, useLocation } from "react-router";
 export default function MainLayout() {
     const location = useLocation();
     const currentpath = location.pathname;
-    console.log("Current location:", currentpath);
     return (
         <main>
             <Navbar />

@@ -1,36 +1,15 @@
-import { useQuery } from "@tanstack/react-query";
 import TechnologyCard from "./components/TechnologyCard";
 import TechnologyCardSkeleton from "./components/TechnologyCardSkeleton";
-import useAxiosCommon from "@/hooks/useAxiousCommon";
 import type { Technology } from "@/types/expertise.type";
 import { Link, useLocation } from "react-router";
 import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
+import useTechnology from "@/lib/useTechnology";
 
 
 export default function OurTechnology() {
-    const axiosCommon = useAxiosCommon();
+    const { technologys, isLoading, error } = useTechnology();
     const location = useLocation();
-
-
-    const { data: technologys = [], isLoading, error } = useQuery({
-        queryKey: ['technologys'],
-        queryFn: async () => {
-
-            try {
-                const { data } = await axiosCommon.get('/technology/index');
-                return data.data.data;
-            }
-            catch (err: unknown) {
-                if (err instanceof Error) {
-                    console.error("Failed to fetch technology data:", err.message);
-                } else {
-                    console.error("Failed to fetch technology data:", err);
-                }
-                return []; // Always return a value, even on error
-            }
-        }
-    });
 
      if (error) {
         return (

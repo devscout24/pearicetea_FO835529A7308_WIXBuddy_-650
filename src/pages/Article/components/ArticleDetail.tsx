@@ -9,7 +9,6 @@ export default function ArticleDetail() {
     return (
         <section className="px-5 py-8">
             <h1 className="text-3xl font-semibold text-title02 mb-7">{title}</h1>
-            {/* {image && <img src={image} alt={title} className="h- w-full object-cover rounded-md" />} */}
             <div className="w-full h-64 md:h-[500px] mb-6 rounded-lg overflow-hidden shadow-[0_0_14px_rgba(0,0,0,0.2)]">
                 <img
                     src={image}
