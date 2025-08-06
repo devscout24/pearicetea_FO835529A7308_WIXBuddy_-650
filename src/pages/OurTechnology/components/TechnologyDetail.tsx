@@ -40,7 +40,7 @@ export default function TechnologyDetail() {
                 {/* Image container with proper styling */}
                 <div className="w-full h-64 md:h-96 mb-6 rounded-lg overflow-hidden shadow-[0_0_14px_rgba(0,0,0,0.2)]">
                     <img
-                        src={`https://pearicetea.softvencefsd.xyz/${image}`}
+                        src={image}
                         alt={title}
                         className="w-full h-full object-cover"
                         onError={(e) => {

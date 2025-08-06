@@ -10,6 +10,7 @@ import OurTechnology from "@/pages/OurTechnology/Index";
 import ContactUs from "@/pages/ContuctUs";
 import NewsAndHighlights from "@/pages/NewsAndHighlights/Index";
 import Articles from "@/pages/Article";
+import ArticleDetail from "@/pages/Article/components/ArticleDetail";
 
 
 export const router = createBrowserRouter([
@@ -58,6 +59,18 @@ export const router = createBrowserRouter([
       {
         path: 'articles',
         element: <Articles />,
+      },
+      {
+        path: 'article/:id',
+        element: <ArticleDetail />,
+        loader: async ({ params }) => {
+          try {
+            const { data } = await axiosCommon.get(`/article/show/${params.id}`);
+            return data;
+          } catch {
+            throw new Error("Failed to fetch article details");
+          }
+        }
       }
     ]
   }
