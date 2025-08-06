@@ -12,7 +12,7 @@ export default function AreasOfExpertise() {
     const location = useLocation();
     const axiosCommon = useAxiosCommon();
 
-    const { data: expertises = [], isLoading } = useQuery({
+    const { data: expertises = [], isLoading, error } = useQuery({
         queryKey: ["expertise"],
         queryFn: async () => {
             try {
@@ -28,6 +28,14 @@ export default function AreasOfExpertise() {
             }
         },
     });
+
+    if (error) {
+        return (
+            <div className="text-center py-8">
+                <p className="text-red-600">Failed to load services. Please try again later.</p>
+            </div>
+        )
+    }
 
     return (
         <section className="py-10 px-4">

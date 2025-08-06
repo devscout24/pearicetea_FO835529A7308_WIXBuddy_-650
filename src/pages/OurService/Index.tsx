@@ -13,7 +13,7 @@ export default function OurService() {
   const axiosCommon = useAxiosCommon();
 
 
-  const { data: services = [], isLoading, error, refetch } = useQuery({
+  const { data: services = [], isLoading, error } = useQuery({
     queryKey: ['services'],
     queryFn: async () => {
       try {
@@ -26,17 +26,11 @@ export default function OurService() {
   })
 
   if (error) {
-    return <div className="py-10 px-4">
-      <h1 className="text-3xl md:text-4xl font-semibold text-title02 text-center md:text-left mb-7">
-        Our Service
-      </h1>
-      <div className="flex items-center gap-5 justify-center">
-        <div className="text-red-500 text-center">{error.message}</div>
-        <Button variant="default" onClick={() => refetch()} className="cursor-pointer px-8">
-          Retry
-        </Button>
+    return (
+      <div className="text-center py-8">
+        <p className="text-red-600">Failed to load services. Please try again later.</p>
       </div>
-    </div>
+    )
   }
 
   return (

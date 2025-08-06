@@ -1,3 +1,4 @@
+import NewsAndHighlightsSkeleton from "@/components/NewsAndHighlightsSkeleton";
 import useAxiosCommon from "@/hooks/useAxiousCommon";
 import { useQuery } from "@tanstack/react-query";
 import parse, { domToReact, Element } from "html-react-parser";
@@ -60,9 +61,7 @@ export default function NewsAndHighlights() {
       </h1>
 
       {isLoading && (
-        <div className="flex justify-center py-8">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-        </div>
+        <NewsAndHighlightsSkeleton />
       )}
 
       {error && (

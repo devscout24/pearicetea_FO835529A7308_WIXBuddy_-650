@@ -9,6 +9,7 @@ import { createBrowserRouter } from "react-router";
 import OurTechnology from "@/pages/OurTechnology/Index";
 import ContactUs from "@/pages/ContuctUs";
 import NewsAndHighlights from "@/pages/NewsAndHighlights/Index";
+import Articles from "@/pages/Article";
 
 
 export const router = createBrowserRouter([
@@ -53,6 +54,10 @@ export const router = createBrowserRouter([
       {
         path: 'contact',
         element: <ContactUs />,
+      },
+      {
+        path: 'articles',
+        element: <Articles />,
       }
     ]
   }

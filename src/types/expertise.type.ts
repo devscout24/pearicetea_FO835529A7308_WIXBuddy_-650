@@ -10,3 +10,10 @@ export type Technology = {
     title: string;
     description: string;
 }
+
+export type Articles = {
+    id: number;
+    title: string;
+    description: string;
+    image: string;
+}

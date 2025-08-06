@@ -13,7 +13,7 @@ export default function OurTechnology() {
     const location = useLocation();
 
 
-    const { data: technologys = [], isLoading } = useQuery({
+    const { data: technologys = [], isLoading, error } = useQuery({
         queryKey: ['technologys'],
         queryFn: async () => {
 
@@ -32,6 +32,14 @@ export default function OurTechnology() {
         }
     });
 
+     if (error) {
+        return (
+            <div className="text-center py-8">
+                <p className="text-red-600">Failed to load technologies. Please try again later.</p>
+            </div>
+        )
+    }
+
     return (
         <section className="py-10 px-4">
             <h1 className="text-3xl md:text-4xl font-semibold text-title02 text-center md:text-left mb-7">
@@ -40,7 +48,7 @@ export default function OurTechnology() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {isLoading ? (
                     // Show skeletons while loading
-                    Array.from({ length: 6 }).map((_, index) => (
+                    Array.from({ length: 2 }).map((_, index) => (
                         <TechnologyCardSkeleton key={index} />
                     ))
                 ) : (
