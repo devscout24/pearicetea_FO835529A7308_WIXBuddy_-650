@@ -30,13 +30,11 @@ export default function Navbar() {
     // Create dynamic technology links from API data
     const technologyLinks = technologys?.map((tech: { id: string | number; title?: string; name?: string }) => {
         const href = `/technology/show/${tech.id}`;
-        console.log('Creating technology link:', { id: tech.id, name: tech.title || tech.name, href });
         return {
             name: tech.title || tech.name || `Technology ${tech.id}`,
             href
         };
     }) || [];
-    console.log('Final technologyLinks:', technologyLinks);
 
     // Function to check if route is active
     const isActiveRoute = (href: string) => {

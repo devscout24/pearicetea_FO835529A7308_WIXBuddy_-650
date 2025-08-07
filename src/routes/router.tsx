@@ -11,6 +11,7 @@ import ContactUs from "@/pages/ContuctUs";
 import NewsAndHighlights from "@/pages/NewsAndHighlights/Index";
 import Articles from "@/pages/Article";
 import ArticleDetail from "@/pages/Article/components/ArticleDetail";
+import Courses from "@/pages/Courses";
 
 
 export const router = createBrowserRouter([
@@ -30,6 +31,10 @@ export const router = createBrowserRouter([
       {
         path: "expertise",
         element: <AreasOfExpertise />
+      },
+      {
+        path: 'training-courses',
+        element: <Courses />,
       },
       {
         path: 'news-highlight',
