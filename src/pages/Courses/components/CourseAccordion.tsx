@@ -3,7 +3,6 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import useCourseAccordion from "@/lib/useCourseAccordion";
 import { ChevronDown, Minus, Plus } from "lucide-react";
 import { useState } from "react";
-import parse, { domToReact, Element } from "html-react-parser";
 import { Link, useLocation } from "react-router";
 import { Button } from "@/components/ui/button";
 
@@ -26,26 +25,71 @@ export default function CourseAccordion() {
             return null;
         }
 
-        return parse(htmlString, {
-            replace: (node) => {
-                if (node instanceof Element && node.name === "a") {
-                    const href = node.attribs.href;
-                    const text = domToReact(node.children as import("html-react-parser").DOMNode[]);
+        // Debug: log the content to see what we're working with
+        console.log("HTML String:", htmlString);
 
-                    // Custom styled link
-                    return (
-                        <a
-                            href={href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-foreground font-semibold hover:underline"
-                        >
-                            {text}
-                        </a>
-                    );
-                }
-            },
+        // Remove HTML tags to get plain text
+        const plainText = htmlString.replace(/<[^>]*>/g, '').trim();
+        console.log("Plain Text:", plainText);
+        
+        // Split by line breaks first
+        let lines = plainText.split(/[\n\r]+/).map(line => line.trim()).filter(line => line.length > 0);
+        
+        // If no line breaks, try splitting by common patterns
+        if (lines.length <= 1) {
+            lines = plainText
+                .split(/(?=Chapter\s+)|(?=Course\s+Material:)|(?=Time\s+Frame:)|(?=Cost:)/gi)
+                .map(line => line.trim())
+                .filter(line => line.length > 0);
+        }
+
+        console.log("Final lines array:", lines);
+
+        // Separate chapters from course details
+        const chapters: string[] = [];
+        const courseDetails: string[] = [];
+        
+        lines.forEach(line => {
+            if (line.toLowerCase().includes('chapter') || 
+                line.match(/^(one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve)\s*[-–—]\s*.+/i)) {
+                chapters.push(line);
+            } else if (line.includes('Course Material:') || line.includes('Time Frame:') || line.includes('Cost:')) {
+                courseDetails.push(line);
+            } else if (line.match(/material|frame|cost|price|\$|hours|days|textbook|included/i)) {
+                courseDetails.push(line);
+            }
         });
+
+        console.log("Chapters:", chapters);
+        console.log("Course Details:", courseDetails);
+
+        return (
+            <div className="space-y-4">
+                {/* Course Content Header */}
+                <div>
+                    <h4 className="text-muted-title font-semibold text-base mb-3">Course Content:</h4>
+
+                    {/* Chapters with bullet points */}
+                    <div className="space-y-2">
+                        {chapters.map((chapter, index) => (
+                            <div key={index} className="flex items-start gap-3">
+                                <span className="text-description mt-0.5 text-base">•</span>
+                                <div className="flex-1 text-description">{chapter}</div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                
+                {/* Course Details without bullets */}
+                {courseDetails.length > 0 && (
+                    <div className="space-y-1 text-base text-muted-title">
+                        {courseDetails.map((detail, index) => (
+                            <div key={index}>{detail}</div>
+                        ))}
+                    </div>
+                )}
+            </div>
+        );
     };
 
     // Skeleton loader component
@@ -58,7 +102,7 @@ export default function CourseAccordion() {
     if (error) {
         return (
             <div className="text-center py-8">
-                <p className="text-red-600">Failed to load services. Please try again later.</p>
+                <p className="text-red-600">Failed to load courses. Please try again later.</p>
             </div>
         )
     }
@@ -74,11 +118,15 @@ export default function CourseAccordion() {
             >
                 {currentpath === '/' ? coursesAccordion.slice(0, 3).map((course: CourseAccordion) => (
                     <div key={course.id}>
-                        <AccordionItem value={course.id} className={`bg-muted-foreground/20 py-2 px-5 rounded-md`}>
+                        <AccordionItem value={course.id} className={`bg-muted-foreground/10 px-5 rounded-md`}>
                             <AccordionTrigger>
                                 <div className="flex md:items-center justify-between w-full gap-3 cursor-pointer">
-                                    <span className="text-base md:text-xl text-foreground01">{course.title}</span>
-                                    {openItem === course.id ? <Minus strokeWidth={1.75} className="size-6" /> :  <Plus strokeWidth={1.75} className="size-6" />}
+                                    <span className="text-base md:text-xl text-title02">{course.title}</span>
+                                    {openItem === course.id ? <div className="bg-muted-foreground/80 p-1 rounded-full">
+                                        <Minus strokeWidth={1.75} className="size-5 text-white" />
+                                    </div> : <div className="bg-foreground p-1 rounded-full">
+                                        <Plus strokeWidth={1.75} className="size-5 text-white" />
+                                    </div>}
                                 </div>
                             </AccordionTrigger>
                             <AccordionContent className="md:w-[85%]">
@@ -94,8 +142,12 @@ export default function CourseAccordion() {
                             <AccordionItem value={course.id} className={`bg-muted-foreground/20 py-2 px-5 rounded-md`}>
                                 <AccordionTrigger>
                                     <div className="flex md:items-center justify-between w-full gap-3 cursor-pointer">
-                                        <span className="text-base md:text-xl text-foreground01">{course.title}</span>
-                                        {openItem === course.id ? <Minus strokeWidth={1.75} className="size-6" /> :  <Plus strokeWidth={1.75} className="size-6" />}
+                                        <span className="text-base md:text-xl text-title02">{course.title}</span>
+                                        {openItem === course.id ? <div className="bg-muted-foreground/80 p-1 rounded-full">
+                                            <Minus strokeWidth={1.75} className="size-5 text-white" />
+                                        </div> : <div className="bg-foreground p-1 rounded-full">
+                                            <Plus strokeWidth={1.75} className="size-5 text-white" />
+                                        </div>}
                                     </div>
                                 </AccordionTrigger>
                                 <AccordionContent className="md:w-[85%]">

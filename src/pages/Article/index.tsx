@@ -10,7 +10,7 @@ export default function Articles() {
             <h1 className="text-3xl md:text-4xl font-semibold text-title02 text-center md:text-left mb-7 px-4">
                 Articles
             </h1>
-            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 px-4" >
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4 px-4" >
                     {isLoading ? (
                       // Show skeletons while loading
                       Array.from({ length: 12 }).map((_, index) => (

@@ -48,6 +48,7 @@
   --color-sidebar-ring: var(--sidebar-ring);
   --color-title02: var(--title02);
   --color-description: var(--description);
+  --color-muted-title: var(--muted-title);
 }
 
 :root {
@@ -85,6 +86,7 @@
   --sidebar-ring: oklch(0.708 0 0);
   --title02: oklch(51.03% 0.000 0);
   --description: oklch(53.63% 0.038 262.54);
+  --muted-title: oklch(38.29% 0.000 0);
 }
 
 .dark {
