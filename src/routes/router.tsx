@@ -12,6 +12,7 @@ import NewsAndHighlights from "@/pages/NewsAndHighlights/Index";
 import Articles from "@/pages/Article";
 import ArticleDetail from "@/pages/Article/components/ArticleDetail";
 import Courses from "@/pages/Courses";
+import GlobalSearchResult from "@/pages/GlobalSearchResult";
 
 
 export const router = createBrowserRouter([
@@ -76,6 +77,10 @@ export const router = createBrowserRouter([
             throw new Error("Failed to fetch article details");
           }
         }
+      },
+      {
+        path: 'global-search',
+        element: <GlobalSearchResult />
       }
     ]
   }

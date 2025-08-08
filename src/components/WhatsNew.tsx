@@ -4,6 +4,7 @@ import { ChevronDown, Search } from "lucide-react";
 import useArticle from "@/lib/useArticle";
 import type { Articles } from "@/types/expertise.type";
 import useProTip from "@/lib/useProTip";
+import GlobalSearch from "./GlobalSearch";
 
 
 
@@ -46,21 +47,7 @@ export default function WhatsNew() {
             </div>
             <div className="mt-10 mx-7">
         {/* Search Bar */}
-        <div className="flex items-center border border-foreground rounded-md overflow-hidden mb-6 shadow-sm bg-white relative">
-          <input
-            type="text"
-            placeholder="Search..."
-            className="flex-grow p-3 text-gray-700 focus:outline-none focus:ring focus:ring-foreground rounded-l-md "
-          />
-          <button className="bg-foreground text-white p-3.5 rounded-r-md flex items-center justify-center transition-colors duration-200 absolute right-0">
-            <Search size={24} />
-          </button>
-        </div>
-
-        {/* Request a Quote Button */}
-        <button className="w-full bg-foreground hover:bg-foreground/90 text-white font-semibold py-3 rounded-lg shadow-md transition-colors duration-200 cursor-pointer text-xl mb-10">
-          Request a Quote
-        </button>
+        <GlobalSearch />
       </div>
         </div>
     )
