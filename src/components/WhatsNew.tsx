@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 import { Button } from "./ui/button";
-import { ChevronDown, Search } from "lucide-react";
+import { ChevronDown} from "lucide-react";
 import useArticle from "@/lib/useArticle";
 import type { Articles } from "@/types/expertise.type";
 import useProTip from "@/lib/useProTip";

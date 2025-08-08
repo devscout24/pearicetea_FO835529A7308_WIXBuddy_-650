@@ -2,9 +2,7 @@ import GlobalSearch from "@/components/GlobalSearch";
 import useAxiosCommon from "@/hooks/useAxiousCommon";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams, Link } from "react-router";
-import { ArrowUpRight, ChevronDown, Minus, Plus, Search } from "lucide-react";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { useState } from "react";
+import { ChevronDown, Search } from "lucide-react";
 import type { Articles } from "@/types/expertise.type";
 import { Button } from "@/components/ui/button";
 
@@ -14,7 +12,6 @@ export default function GlobalSearchResult() {
     const searchQuery = searchParams.get('q') || '';
     // console.log("Search Query:", searchQuery);
     const axiosCommon = useAxiosCommon();
-    const [openItem, setOpenItem] = useState<string | null>(null);
 
     const { data: allData = {}, isLoading, error } = useQuery({
         queryKey: ['allData', searchQuery],
@@ -48,57 +45,6 @@ export default function GlobalSearchResult() {
         );
     }
 
-    // Helper function to render course description with bullets
-    const renderCourseDescription = (htmlString: string) => {
-        if (!htmlString || typeof htmlString !== 'string') {
-            return <p className="text-description">No description available</p>;
-        }
-
-        const plainText = htmlString.replace(/<[^>]*>/g, '').trim();
-        let lines = plainText.split(/[\n\r]+/).map(line => line.trim()).filter(line => line.length > 0);
-
-        if (lines.length <= 1) {
-            lines = plainText
-                .split(/(?=Chapter\s+)|(?=Course\s+Material:)|(?=Time\s+Frame:)|(?=Cost:)/gi)
-                .map(line => line.trim())
-                .filter(line => line.length > 0);
-        }
-
-        const chapters = lines.filter(line =>
-            line.toLowerCase().includes('chapter') ||
-            line.match(/^(one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve)\s*[-–—]\s*.+/i)
-        );
-
-        const courseDetails = lines.filter(line =>
-            line.includes('Course Material:') || line.includes('Time Frame:') || line.includes('Cost:') ||
-            line.match(/material|frame|cost|price|\$|hours|days|textbook|included/i)
-        );
-
-        return (
-            <div className="space-y-3">
-                {chapters.length > 0 && (
-                    <div>
-                        <h4 className="text-sm font-semibold text-gray-700 mb-2">Course Content:</h4>
-                        <div className="space-y-1">
-                            {chapters.slice(0, 3).map((chapter, index) => (
-                                <div key={index} className="flex items-start gap-2">
-                                    <span className="text-gray-500 mt-0.5 text-sm">•</span>
-                                    <div className="flex-1 text-description text-sm">{chapter}</div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                )}
-                {courseDetails.length > 0 && (
-                    <div className="text-sm text-gray-600">
-                        {courseDetails.slice(0, 2).map((detail, index) => (
-                            <div key={index}>{detail}</div>
-                        ))}
-                    </div>
-                )}
-            </div>
-        );
-    };
 
     // Helper function to safely parse HTML content
     const parseHtmlContent = (content: string | undefined) => {
