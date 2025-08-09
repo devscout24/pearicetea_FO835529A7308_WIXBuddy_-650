@@ -47,8 +47,8 @@ export default function GlobalSearch() {
     };
 
     return (
-        <form onSubmit={handleSearch} className={`${currentPath.includes('global') ? 'flex  justify-center mt-8 gap-5' : ''} px-5`}>
-            <div className={`flex items-center border border-foreground rounded-md overflow-hidden mb-6 shadow-sm bg-white relative ${currentPath.includes('global') ? 'w-1/2 md:w-3/4' : ''}`}>
+        <form onSubmit={handleSearch} className={`${currentPath.includes('global') ? 'flex flex-col md:flex-row justify-center mt-8 gap-2 md:gap-5' : ''} px-5`}>
+            <div className={`flex items-center border border-foreground rounded-md overflow-hidden mb-6 shadow-sm bg-white relative ${currentPath.includes('global') ? 'w-full md:w-3/4' : ''}`}>
                 <input
                     type="text"
                     placeholder="Search..."
@@ -62,7 +62,7 @@ export default function GlobalSearch() {
             </div>
 
             {/* Request a Quote Button */}
-            <div className={` ${currentPath.includes('global') ? 'w-1/2 md:w-1/4' : 'w-full'}`}>
+            <div className={` ${currentPath.includes('global') ? 'w-full md:w-1/4' : 'w-full'}`}>
                 <button 
                     type="button" 
                     onClick={handleRequestQuote}
