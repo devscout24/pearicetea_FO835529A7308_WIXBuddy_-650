@@ -22,7 +22,6 @@ export default function GlobalSearch() {
 
     const handleSearch = (event: React.FormEvent) => {
         event.preventDefault();
-        console.log("Search submitted with query:", searchValue);
         
         // Navigate to global search page with search query
         if (searchValue.trim()) {
@@ -37,7 +36,6 @@ export default function GlobalSearch() {
     };
 
     const handleRequestQuote = () => {
-        console.log("Request a Quote clicked with search query:", searchValue);
 
         
         // Navigate to global search page with current search value

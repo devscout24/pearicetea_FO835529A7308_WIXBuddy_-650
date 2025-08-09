@@ -13,7 +13,7 @@ export default function MainLayout() {
             <Navbar />
             <div className="h-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-8 gap-4">
                 <div className="col-span-1 hidden lg:block" style={{ backgroundImage: `url(${icons.dot})`, backgroundPosition: 'center' }} />
-                <div className={`min-h-[calc(100vh-289px)] md:col-span-2 ${currentPath.includes('article') || currentPath.includes('global')
+                <div className={`min-h-[calc(100vh-277px)] md:col-span-2 ${currentPath.includes('article') || currentPath.includes('global')
                         ? 'md:col-span-8 lg:col-span-6'
                         : 'lg:col-span-4'
                     }`}>

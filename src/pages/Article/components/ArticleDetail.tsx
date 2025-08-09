@@ -4,7 +4,6 @@ import { useLoaderData } from "react-router";
 
 export default function ArticleDetail() {
     const article = useLoaderData();
-    console.log("Article Detail Data:", article.data.data);
     const { title, description, image } = article.data.data || {};
     return (
         <section className="px-5 py-8">

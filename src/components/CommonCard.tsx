@@ -10,7 +10,6 @@ interface CommonCardProps {
 export default function CommonCard({ service, article }: CommonCardProps) {
   const location = useLocation();
   const currentpath = location.pathname;
-  console.log("Current Path:", currentpath);
   const { title, description } = service || article || {};
 
   return (

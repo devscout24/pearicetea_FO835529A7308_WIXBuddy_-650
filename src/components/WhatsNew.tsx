@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 import { Button } from "./ui/button";
-import { ChevronDown} from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import useArticle from "@/lib/useArticle";
 import type { Articles } from "@/types/expertise.type";
 import useProTip from "@/lib/useProTip";
@@ -11,7 +11,7 @@ import GlobalSearch from "./GlobalSearch";
 
 export default function WhatsNew() {
     const { articles, isLoading } = useArticle();
-    const { proTips,  isLoadingProTips } = useProTip();
+    const { proTips, isLoadingProTips } = useProTip();
     return (
         <div>
             <div className="bg-white mt-12 px-5 py-7">
@@ -19,13 +19,13 @@ export default function WhatsNew() {
                 <ul className="text-lg font-normal space-y-4">
                     {isLoading
                         ? Array.from({ length: 3 }).map((_, idx) => (
-                                <li key={idx} className="animate-pulse h-6 bg-gray-200 rounded w-full" />
-                            ))
+                            <li key={idx} className="animate-pulse h-6 bg-gray-200 rounded w-full" />
+                        ))
                         : articles.slice(0, 3).map((article: Articles) => (
-                                <li key={article.id} className="">
-                                    {article.title}
-                                </li>
-                            ))
+                            <li key={article.id} className="">
+                                {article.title}
+                            </li>
+                        ))
                     }
                 </ul>
                 <div className="flex justify-center my-5">
@@ -45,10 +45,10 @@ export default function WhatsNew() {
                     )}
                 </div>
             </div>
-            <div className="mt-10 mx-7">
-        {/* Search Bar */}
-        <GlobalSearch />
-      </div>
+            <div className="my-10 mx-7">
+                {/* Search Bar */}
+                <GlobalSearch />
+            </div>
         </div>
     )
 }

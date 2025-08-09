@@ -122,7 +122,6 @@ export default function Navbar() {
                                                             <li key={link.name}>
                                                                 <button
                                                                     onClick={() => {
-                                                                        console.log('Mobile navigation triggered for:', link.name, link.href);
                                                                         setIsMobileDropdownOpen(false);
                                                                         setIsSheetOpen(false);
                                                                         navigate(link.href);

@@ -10,7 +10,6 @@ import { Button } from "@/components/ui/button";
 export default function GlobalSearchResult() {
     const [searchParams] = useSearchParams();
     const searchQuery = searchParams.get('q') || '';
-    // console.log("Search Query:", searchQuery);
     const axiosCommon = useAxiosCommon();
 
     const { data: allData = {}, isLoading, error } = useQuery({
@@ -32,11 +31,6 @@ export default function GlobalSearchResult() {
         enabled: !!searchQuery.trim() // Only run query if searchQuery exists
     })
 
-    console.log("All Data:", allData.service);
-    // console.log("All Data Type:", typeof allData);
-    // console.log("Is Array:", Array.isArray(allData));
-    // console.log("All Data Keys:", allData ? Object.keys(allData) : 'No data');
-
     if (error) {
         return (
             <div className="text-center py-8">
@@ -54,6 +48,7 @@ export default function GlobalSearchResult() {
             const plainText = content.replace(/<[^>]*>/g, '').trim();
             return plainText.length > 150 ? plainText.substring(0, 150) + '...' : plainText;
         } catch (error) {
+            console.error("Error parsing HTML content:", error);
             return content.substring(0, 150) + '...';
         }
     };
@@ -97,6 +92,7 @@ export default function GlobalSearchResult() {
             // If no good sentence break, just truncate and add ellipsis
             return truncated.trim() + '...';
         } catch (error) {
+            console.error("Error parsing article description:", error);
             return content.length > 180 ? content.substring(0, 180) + '...' : content;
         }
     };
@@ -124,7 +120,7 @@ export default function GlobalSearchResult() {
                                     Our Service
                                 </h1>
                                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                    {allData.service.slice(0, 6).map((service: any, index: number) => (
+                                    {allData.service.slice(0, 6).map((service: { id: string; title: string; description: string; }, index: number) => (
                                         <div
                                             key={service.id || index}
                                             className="bg-white p-6 rounded-md transition-shadow duration-300 shadow-[0_0_14px_rgba(0,0,0,0.2)]"
@@ -189,7 +185,7 @@ export default function GlobalSearchResult() {
                                     Our Technology
                                 </h1>
                                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                    {allData.technology.slice(0, 6).map((tech: any) => (
+                                    {allData.technology.slice(0, 6).map((tech: { id: string; title: string; description: string; }) => (
                                         <div
                                             key={tech.id}
                                             className="bg-white p-6 rounded-md transition-shadow duration-300 shadow-[0_0_14px_rgba(0,0,0,0.2)]"
@@ -221,7 +217,7 @@ export default function GlobalSearchResult() {
                                     Professional Training Courses
                                 </h1>
                                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                    {allData.course.slice(0, 6).map((course: any) => (
+                                    {allData.course.slice(0, 6).map((course: { id: string; title: string; description: string; }) => (
                                         <div
                                             key={course.id}
                                             className="bg-white p-6 rounded-md transition-shadow duration-300 shadow-[0_0_14px_rgba(0,0,0,0.2)]"
@@ -253,7 +249,7 @@ export default function GlobalSearchResult() {
                                     News & Highlights
                                 </h1>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    {allData.news.slice(0, 6).map((newsItem: any, index: number) => (
+                                    {allData.news.slice(0, 6).map((newsItem: { id: string; title: string; description: string; content: string; date: string; }, index: number) => (
                                         <div
                                             key={newsItem.id || index}
                                             className="bg-white p-6 rounded-md duration-300 shadow-[0_0_14px_rgba(0,0,0,0.2)]"
@@ -284,7 +280,7 @@ export default function GlobalSearchResult() {
                         )}
 
                         {/* Generic fallback for any other data types */}
-                        {Object.entries(allData).map(([key, value]: [string, any]) => {
+                        {/* {Object.entries(allData).map(([key, value]: [string, unknown]) => {
                             // Skip already handled types
                             if (['article', 'service', 'technology', 'course', 'news'].includes(key)) {
                                 return null;
@@ -297,13 +293,13 @@ export default function GlobalSearchResult() {
                                             {key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}
                                         </h2>
                                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                            {value.map((item: any, index: number) => (
+                                            {value.map((item: unknown, index: number) => (
                                                 <div
-                                                    key={item.id || index}
+                                                    key={(item as { id?: string }).id || index}
                                                     className="bg-white p-6 rounded-md duration-300 shadow-[0_0_14px_rgba(0,0,0,0.2)]"
                                                 >
                                                     <h3 className="text-xl font-bold text-foreground mb-2.5">
-                                                        {item.title || item.name || `${key} Item ${index + 1}`}
+                                                        {(item as { title?: string; name?: string }).title || (item as { name?: string }).name || `${key} Item ${index + 1}`}
                                                     </h3>
                                                     <p className="text-description">
                                                         {parseHtmlContent(item.description || item.content)}
@@ -320,7 +316,7 @@ export default function GlobalSearchResult() {
                                 );
                             }
                             return null;
-                        })}
+                        })} */}
 
                         {/* No Results - Only show if we have a search query but no meaningful data */}
                         {!isLoading && searchQuery && (

@@ -10,6 +10,7 @@ import { Link, useLocation } from "react-router";
 
 export default function OurService() {
   const location = useLocation();
+  console.error("Location:", location.pathname);
   const axiosCommon = useAxiosCommon();
 
 

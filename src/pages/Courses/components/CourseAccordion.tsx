@@ -17,7 +17,6 @@ export default function CourseAccordion() {
     const location = useLocation();
     const currentpath = location.pathname;
     const { coursesAccordion, isLoading, error } = useCourseAccordion();
-    console.log("course Accordion", coursesAccordion);
     const [openItem, setOpenItem] = useState<string | null>(coursesAccordion && coursesAccordion.length > 0 ? coursesAccordion[0].id : null);
 
     const renderDescription = (htmlString: string | undefined) => {
@@ -25,12 +24,8 @@ export default function CourseAccordion() {
             return null;
         }
 
-        // Debug: log the content to see what we're working with
-        console.log("HTML String:", htmlString);
-
         // Remove HTML tags to get plain text
         const plainText = htmlString.replace(/<[^>]*>/g, '').trim();
-        console.log("Plain Text:", plainText);
         
         // Split by line breaks first
         let lines = plainText.split(/[\n\r]+/).map(line => line.trim()).filter(line => line.length > 0);
@@ -42,8 +37,6 @@ export default function CourseAccordion() {
                 .map(line => line.trim())
                 .filter(line => line.length > 0);
         }
-
-        console.log("Final lines array:", lines);
 
         // Separate chapters from course details
         const chapters: string[] = [];
@@ -59,9 +52,6 @@ export default function CourseAccordion() {
                 courseDetails.push(line);
             }
         });
-
-        console.log("Chapters:", chapters);
-        console.log("Course Details:", courseDetails);
 
         return (
             <div className="space-y-4">

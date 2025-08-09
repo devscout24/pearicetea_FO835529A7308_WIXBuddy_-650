@@ -9,12 +9,12 @@ import OurTechnology from "../OurTechnology/Index";
 export default function Home() {
   return (
     <section>
-        <OurService />
-        <AreasOfExpertise />
-        <Courses />
-        <NewsAndHighlights />
-        <OurTechnology />
-        <ContactUs />
+      <OurService />
+      <AreasOfExpertise />
+      <Courses />
+      <NewsAndHighlights />
+      <OurTechnology />
+      <ContactUs />
     </section>
   )
 }
