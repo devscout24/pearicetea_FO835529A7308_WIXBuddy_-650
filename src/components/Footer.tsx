@@ -13,7 +13,7 @@ export default function Footer() {
                     <div className="flex items-center space-x-4">
                         <div className="w-8 h-8 rounded-md bg-gray-300"></div>
                         <div className="space-y-2">
-                            <div className="h-5 bg-gray-300 rounded w-60"></div>
+                            <div className="h-5 bg-gray-300 rounded w-80"></div>
                         </div>
                     </div>
 

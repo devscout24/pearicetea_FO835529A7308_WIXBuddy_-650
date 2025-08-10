@@ -5,6 +5,7 @@ import { ChevronDown, Minus, Plus } from "lucide-react";
 import { useState } from "react";
 import { Link, useLocation } from "react-router";
 import { Button } from "@/components/ui/button";
+import parse, { domToReact, Element } from "html-react-parser";
 
 interface CourseAccordion {
     id: string;
@@ -24,8 +25,47 @@ export default function CourseAccordion() {
             return null;
         }
 
-        // Remove HTML tags to get plain text
-        const plainText = htmlString.replace(/<[^>]*>/g, '').trim();
+        // First, decode HTML entities
+        const decodeHtmlEntities = (str: string) => {
+            const entityMap: { [key: string]: string } = {
+                '&amp;': '&',
+                '&lt;': '<',
+                '&gt;': '>',
+                '&quot;': '"',
+                '&#39;': "'",
+                '&nbsp;': ' ',
+                '&apos;': "'",
+                '&cent;': '¢',
+                '&pound;': '£',
+                '&yen;': '¥',
+                '&euro;': '€',
+                '&copy;': '©',
+                '&reg;': '®'
+            };
+            
+            // First handle named entities
+            let decoded = str.replace(/&[a-zA-Z]+;/g, (entity) => {
+                return entityMap[entity] || entity;
+            });
+            
+            // Then handle numeric entities like &#39;
+            decoded = decoded.replace(/&#(\d+);/g, (_, num) => {
+                return String.fromCharCode(parseInt(num, 10));
+            });
+            
+            // Clean up any malformed HTML patterns like ">"> or similar
+            decoded = decoded.replace(/["'][>]+["']/g, '');
+            decoded = decoded.replace(/>[">]+/g, '');
+            decoded = decoded.replace(/["']{2,}/g, '"');
+            
+            return decoded.trim();
+        };
+
+        // Decode HTML entities first
+        const decodedString = decodeHtmlEntities(htmlString);
+
+        // Remove HTML tags to get plain text for parsing structure
+        const plainText = decodedString.replace(/<[^>]*>/g, '').trim();
         
         // Split by line breaks first
         let lines = plainText.split(/[\n\r]+/).map(line => line.trim()).filter(line => line.length > 0);
@@ -53,33 +93,60 @@ export default function CourseAccordion() {
             }
         });
 
-        return (
-            <div className="space-y-4">
-                {/* Course Content Header */}
-                <div>
-                    <h4 className="text-muted-title font-semibold text-base mb-3">Course Content:</h4>
+        // If we have structured content, return formatted version
+        if (chapters.length > 0 || courseDetails.length > 0) {
+            return (
+                <div className="space-y-4">
+                    {/* Course Content Header */}
+                    {chapters.length > 0 && (
+                        <div>
+                            <h4 className="text-muted-title font-semibold text-base mb-3">Course Content:</h4>
 
-                    {/* Chapters with bullet points */}
-                    <div className="space-y-2">
-                        {chapters.map((chapter, index) => (
-                            <div key={index} className="flex items-start gap-3">
-                                <span className="text-description mt-0.5 text-base">•</span>
-                                <div className="flex-1 text-description">{chapter}</div>
+                            {/* Chapters with bullet points */}
+                            <div className="space-y-2">
+                                {chapters.map((chapter, index) => (
+                                    <div key={index} className="flex items-start gap-3">
+                                        <span className="text-description mt-0.5 text-base">•</span>
+                                        <div className="flex-1 text-description">{chapter}</div>
+                                    </div>
+                                ))}
                             </div>
-                        ))}
-                    </div>
+                        </div>
+                    )}
+                    
+                    {/* Course Details without bullets */}
+                    {courseDetails.length > 0 && (
+                        <div className="space-y-1 text-base text-muted-title">
+                            {courseDetails.map((detail, index) => (
+                                <div key={index}>{detail}</div>
+                            ))}
+                        </div>
+                    )}
                 </div>
-                
-                {/* Course Details without bullets */}
-                {courseDetails.length > 0 && (
-                    <div className="space-y-1 text-base text-muted-title">
-                        {courseDetails.map((detail, index) => (
-                            <div key={index}>{detail}</div>
-                        ))}
-                    </div>
-                )}
-            </div>
-        );
+            );
+        }
+
+        // If no structured content found, use html-react-parser for general HTML content
+        return parse(decodedString, {
+            replace: (node) => {
+                if (node instanceof Element && node.name === "a") {
+                    const href = node.attribs.href;
+                    const text = domToReact(node.children as import("html-react-parser").DOMNode[]);
+                    
+                    // Custom styled link
+                    return (
+                        <a
+                            href={href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-foreground font-semibold hover:underline"
+                        >
+                            {text}
+                        </a>
+                    );
+                }
+            },
+        });
     };
 
     // Skeleton loader component
@@ -103,7 +170,7 @@ export default function CourseAccordion() {
                 type="single"
                 collapsible
                 className="w-full space-y-4 "
-                defaultValue={currentpath === '/training-courses' && coursesAccordion.length > 0 ? coursesAccordion[0].id : "item-1"}
+                defaultValue={currentpath === '/training-courses' && coursesAccordion.length > 0 ? coursesAccordion[0].id : ""}
                 onValueChange={(value) => setOpenItem(value)}
             >
                 {currentpath === '/' ? coursesAccordion.slice(0, 3).map((course: CourseAccordion) => (
