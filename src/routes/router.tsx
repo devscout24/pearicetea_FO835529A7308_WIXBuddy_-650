@@ -13,6 +13,7 @@ import Articles from "@/pages/Article";
 import ArticleDetail from "@/pages/Article/components/ArticleDetail";
 import Courses from "@/pages/Courses";
 import GlobalSearchResult from "@/pages/GlobalSearchResult";
+import SearchService from "@/pages/IndivisualSearchPages/SearchService";
 
 
 export const router = createBrowserRouter([
@@ -81,6 +82,10 @@ export const router = createBrowserRouter([
       {
         path: 'global-search',
         element: <GlobalSearchResult />
+      },
+      {
+        path: 'search-service',
+        element: <SearchService />
       }
     ]
   }
