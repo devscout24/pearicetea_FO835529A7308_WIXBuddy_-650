@@ -166,8 +166,8 @@ export default function GlobalSearchResult() {
                                 <h1 className="text-3xl md:text-4xl font-semibold text-title02 text-center md:text-left mb-7">
                                     Our Technology
                                 </h1>
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                    {allData.technology.slice(0, 6).map((tech: { id: string; title: string; description: string; }) => (
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+                                    {allData.technology.slice(0, 3).map((tech: { id: string; title: string; description: string; }) => (
                                         <div
                                             key={tech.id}
                                             className="bg-white p-6 rounded-md transition-shadow duration-300 shadow-[0_0_14px_rgba(0,0,0,0.2)]"
@@ -182,7 +182,7 @@ export default function GlobalSearchResult() {
                                     ))}
                                 </div>
                                 <div className="flex justify-center mt-10">
-                                    <Link to='/technology'>
+                                    <Link to={`/search-technology/?q=${encodeURIComponent(searchQuery.trim())}`}>
                                         <Button variant="outline" className="flex items-center !px-10 !py-5 border-foreground text-foreground text-xl font-medium rounded-md transition-all duration-300 hover:bg-foreground hover:text-white ease-in-out cursor-pointer">
                                             <span>View All</span>
                                             <ChevronDown size={20} />
