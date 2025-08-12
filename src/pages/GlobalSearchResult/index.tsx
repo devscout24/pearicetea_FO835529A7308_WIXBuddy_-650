@@ -198,8 +198,8 @@ export default function GlobalSearchResult() {
                                 <h1 className="text-3xl md:text-4xl font-semibold text-title02 text-center md:text-left mb-7">
                                     Professional Training Courses
                                 </h1>
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                    {allData.course.slice(0, 6).map((course: { id: string; title: string; description: string; }) => (
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+                                    {allData.course.slice(0, 4).map((course: { id: string; title: string; description: string; }) => (
                                         <div
                                             key={course.id}
                                             className="bg-white p-6 rounded-md transition-shadow duration-300 shadow-[0_0_14px_rgba(0,0,0,0.2)]"
@@ -214,7 +214,7 @@ export default function GlobalSearchResult() {
                                     ))}
                                 </div>
                                 <div className="flex justify-center mt-10">
-                                    <Link to='/training-courses'>
+                                    <Link to={`/search-courses/?q=${encodeURIComponent(searchQuery.trim())}`}>
                                         <Button variant="outline" className="flex items-center !px-10 !py-5 border-foreground text-foreground text-xl font-medium rounded-md transition-all duration-300 hover:bg-foreground hover:text-white ease-in-out cursor-pointer">
                                             <span>View All</span>
                                             <ChevronDown size={20} />
@@ -231,7 +231,7 @@ export default function GlobalSearchResult() {
                                     News & Highlights
                                 </h1>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    {allData.news.slice(0, 6).map((newsItem: { id: string; title: string; description: string; content: string; date: string; }, index: number) => (
+                                    {allData.news.slice(0, 2).map((newsItem: { id: string; title: string; description: string; content: string; date: string; }, index: number) => (
                                         <div
                                             key={newsItem.id || index}
                                             className="bg-white p-6 rounded-md duration-300 shadow-[0_0_14px_rgba(0,0,0,0.2)]"
@@ -251,7 +251,7 @@ export default function GlobalSearchResult() {
                                     ))}
                                 </div>
                                 <div className="flex justify-center mt-10">
-                                    <Link to='/news-highlight'>
+                                    <Link to='/search-news'>
                                         <Button variant="outline" className="flex items-center !px-10 !py-5 border-foreground text-foreground text-xl font-medium rounded-md transition-all duration-300 hover:bg-foreground hover:text-white ease-in-out cursor-pointer">
                                             <span>View All</span>
                                             <ChevronDown size={20} />

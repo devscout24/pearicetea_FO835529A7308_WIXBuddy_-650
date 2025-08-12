@@ -16,6 +16,7 @@ import GlobalSearchResult from "@/pages/GlobalSearchResult";
 import SearchService from "@/pages/IndivisualSearchPages/SearchService";
 import SearchArticles from "@/pages/IndivisualSearchPages/searchArticles";
 import SearchTechnology from "@/pages/IndivisualSearchPages/searchTechnology";
+import SearchCourses from "@/pages/IndivisualSearchPages/SearchCourses";
 
 
 export const router = createBrowserRouter([
@@ -96,6 +97,10 @@ export const router = createBrowserRouter([
       {
         path: 'search-technology',
         element: <SearchTechnology />
+      },
+      {
+        path: "search-courses",
+        element: <SearchCourses />
       }
     ]
   }
