@@ -251,7 +251,7 @@ export default function GlobalSearchResult() {
                                     ))}
                                 </div>
                                 <div className="flex justify-center mt-10">
-                                    <Link to='/search-news'>
+                                    <Link to={`/search-news/?q=${encodeURIComponent(searchQuery.trim())}`}>
                                         <Button variant="outline" className="flex items-center !px-10 !py-5 border-foreground text-foreground text-xl font-medium rounded-md transition-all duration-300 hover:bg-foreground hover:text-white ease-in-out cursor-pointer">
                                             <span>View All</span>
                                             <ChevronDown size={20} />

@@ -20,8 +20,6 @@ export default function SearchCourses() {
     const { data: allData = {}, isLoading, error } = useSearchData(searchQuery);
     const coursesAccordion: CourseAccordion[] = allData.course || [];
     const [openItem, setOpenItem] = useState<string | null>(coursesAccordion && coursesAccordion.length > 0 ? coursesAccordion[0].id : null);
-    console.log("Search Query:", searchQuery);
-    console.log("All Data:", coursesAccordion);
 
     const renderDescription = (htmlString: string | undefined) => {
         if (!htmlString || typeof htmlString !== 'string') {

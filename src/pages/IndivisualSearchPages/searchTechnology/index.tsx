@@ -9,8 +9,6 @@ export default function SearchTechnology() {
     const [searchParams] = useSearchParams();
     const searchQuery = searchParams.get('q') || '';
     const { data: allData = {}, isLoading, error } = useSearchData(searchQuery);
-    console.log("Search Query:", searchQuery);
-    console.log("All Data:", allData);
 
     if (error) {
         return (

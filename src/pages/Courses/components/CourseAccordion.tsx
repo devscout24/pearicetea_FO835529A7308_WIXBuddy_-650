@@ -18,7 +18,6 @@ export default function CourseAccordion() {
     const location = useLocation();
     const currentpath = location.pathname;
     const { coursesAccordion, isLoading, error } = useCourseAccordion();
-    console.log(coursesAccordion)
     const [openItem, setOpenItem] = useState<string | null>(coursesAccordion && coursesAccordion.length > 0 ? coursesAccordion[0].id : null);
 
     const renderDescription = (htmlString: string | undefined) => {
