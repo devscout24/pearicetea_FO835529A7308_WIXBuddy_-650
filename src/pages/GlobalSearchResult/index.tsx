@@ -1,41 +1,22 @@
 import GlobalSearch from "@/components/GlobalSearch";
-import useAxiosCommon from "@/hooks/useAxiousCommon";
-import { useQuery } from "@tanstack/react-query";
 import { useSearchParams, Link } from "react-router";
 import { ChevronDown, Search } from "lucide-react";
 import type { Articles } from "@/types/expertise.type";
 import { Button } from "@/components/ui/button";
+import { useSearchData } from "@/lib/useSearchData";
 
 
 export default function GlobalSearchResult() {
     const [searchParams] = useSearchParams();
     const searchQuery = searchParams.get('q') || '';
-    const axiosCommon = useAxiosCommon();
-    console.log("Search Query:", searchQuery);
 
-    const { data: allData = {}, isLoading, error } = useQuery({
-        queryKey: ['allData', searchQuery],
-        queryFn: async () => {
-            if (!searchQuery.trim()) {
-                return {};
-            }
-            try {
-                const { data } = await axiosCommon.post('/search/index', {
-                    search: searchQuery,
-                });
-                return data?.data?.data;
-            } catch (err: unknown) {
-                console.error("Failed to fetch search results:", err instanceof Error ? err.message : err);
-                throw err;
-            }
-        },
-        enabled: !!searchQuery.trim() // Only run query if searchQuery exists
-    })
+    const { data: allData = {}, isLoading, error } = useSearchData(searchQuery);
+
 
     if (error) {
         return (
-            <div className="text-center py-8">
-                <p className="text-red-600">Failed to load search results. Please try again later.</p>
+            <div className="text-center py-8 flex items-center justify-center h-full">
+                <p className="text-red-600">Something went wrong. Please try again later.</p>
             </div>
         );
     }
@@ -121,7 +102,7 @@ export default function GlobalSearchResult() {
                                     Our Service
                                 </h1>
                                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                    {allData.service.slice(0, 6).map((service: { id: string; title: string; description: string; }, index: number) => (
+                                    {allData.service.slice(0, 3).map((service: { id: string; title: string; description: string; }, index: number) => (
                                         <div
                                             key={service.id || index}
                                             className="bg-white p-6 rounded-md transition-shadow duration-300 shadow-[0_0_14px_rgba(0,0,0,0.2)]"
@@ -153,7 +134,7 @@ export default function GlobalSearchResult() {
                                     Articles
                                 </h1>
                                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                    {allData.article.slice(0, 6).map((art: Articles) => (
+                                    {allData.article.slice(0, 3).map((art: Articles) => (
                                         <Link
                                             key={art.id}
                                             to={`/article/${art.id}`}
@@ -169,7 +150,7 @@ export default function GlobalSearchResult() {
                                     ))}
                                 </div>
                                 <div className="flex justify-center mt-10">
-                                    <Link to='/articles'>
+                                    <Link to={`/search-articles/?q=${encodeURIComponent(searchQuery.trim())}`}>
                                         <Button variant="outline" className="flex items-center !px-10 !py-5 border-foreground text-foreground text-xl font-medium rounded-md transition-all duration-300 hover:bg-foreground hover:text-white ease-in-out cursor-pointer">
                                             <span>View All</span>
                                             <ChevronDown size={20} />
