@@ -56,7 +56,7 @@ export default function GlobalSearch() {
                     onChange={handleInputChange}
                     className="flex-grow p-3 text-gray-700 focus:outline-none focus:ring focus:ring-foreground rounded-l-md "
                 />
-                <div className="bg-foreground text-white p-3.5 rounded-r-md flex items-center justify-center transition-colors duration-200 absolute right-0">
+                <div onClick={handleSearch} className="bg-foreground text-white p-3.5 rounded-r-md flex items-center justify-center transition-colors duration-200 absolute right-0 cursor-pointer">
                     <Search size={24} />
                 </div>
             </div>

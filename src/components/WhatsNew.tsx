@@ -12,7 +12,6 @@ import GlobalSearch from "./GlobalSearch";
 export default function WhatsNew() {
     const { articles, isLoading } = useArticle();
     const { proTips, isLoadingProTips } = useProTip();
-    console.log(proTips);
     return (
         <div>
             <div className="bg-white mt-12 px-5 py-7">
