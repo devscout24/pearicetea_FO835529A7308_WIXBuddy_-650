@@ -136,7 +136,7 @@ export default function ContactUsForm() {
                     <div className="mt-10 flex justify-center gap-3 md:justify-end">
                         <Button
                             variant={"default"}
-                            type="submit"
+                            // type="submit"
                             disabled={isSubmitting}
                             className="border-button-border border px-14 py-5 text-lg font-normal shadow-2xl cursor-pointer"
                         >

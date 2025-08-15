@@ -34,8 +34,8 @@ export default function useContactUsForm() {
         
         try {
             // Submit the form data to your API
-            await axiosCommon.post('/contact/store', data);
-            
+            const response = await axiosCommon.post('/contact/store', data);
+            console.log(response);
             // Reset form after successful submission
             toast.success('Thanks for contacting us!');
             form.reset();
