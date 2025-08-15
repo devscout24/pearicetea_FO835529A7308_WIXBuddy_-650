@@ -31,11 +31,13 @@ export default function useContactUsForm() {
 
     const handleSubmit = async (data: ContactUsValues) => {
         event?.preventDefault(); // Prevent default form submission if needed
+        console.log("Form data:", data);
         
         try {
             // Submit the form data to your API
             const response = await axiosCommon.post('/contact/store', data);
-            console.log(response);
+            
+            console.log("Form submitted successfully:", response);
             // Reset form after successful submission
             toast.success('Thanks for contacting us!');
             form.reset();
