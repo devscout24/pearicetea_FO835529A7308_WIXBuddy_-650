@@ -10,7 +10,7 @@ export const useFormSchema = z.object({
     email: z.string().email({ message: "Invalid email address" }),
     phone: z.string().min(10, { message: "Phone must be at least 10 digits" }).regex(/^[+]?[1-9]?[\d\-\s()]*$/, { message: "Invalid phone number format" }),
     subject: z.string().min(3, { message: "Subject must be at least 3 characters" }).max(100, { message: "Subject must be less than 100 characters" }),
-    message: z.string().min(10, { message: "Message must be at least 10 characters" }).max(1000, { message: "Message must be less than 1000 characters" }),
+    description: z.string().min(10, { message: "Description must be at least 10 characters" }).max(1000, { message: "Description must be less than 1000 characters" }),
 });
 
 export type ContactUsValues = z.infer<typeof useFormSchema>;
@@ -25,7 +25,7 @@ export default function useContactUsForm() {
             email: "",
             phone: "",
             subject: "",
-            message: "",
+            description: "",
         },
     });
 

@@ -113,7 +113,7 @@ export default function ContactUsForm() {
                         {/* Business Name */}
                         <FormField
                             control={form.control}
-                            name="message"
+                            name="description"
                             render={({ field }) => (
                                 <FormItem className="w-full mt-6">
                                     <FormControl>
