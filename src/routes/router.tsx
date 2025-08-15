@@ -84,6 +84,18 @@ export const router = createBrowserRouter([
         }
       },
       {
+        path: 'protip/:id',
+        element: <ArticleDetail />,
+        loader: async ({ params }) => {
+          try {
+            const { data } = await axiosCommon.get(`/article/show/${params.id}`);
+            return data;
+          } catch {
+            throw new Error("Failed to fetch article details");
+          }
+        }
+      },
+      {
         path: 'global-search',
         element: <GlobalSearchResult />
       },

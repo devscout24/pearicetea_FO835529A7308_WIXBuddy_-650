@@ -12,6 +12,7 @@ import GlobalSearch from "./GlobalSearch";
 export default function WhatsNew() {
     const { articles, isLoading } = useArticle();
     const { proTips, isLoadingProTips } = useProTip();
+    console.log(proTips);
     return (
         <div>
             <div className="bg-white mt-12 px-5 py-7">
@@ -22,9 +23,11 @@ export default function WhatsNew() {
                             <li key={idx} className="animate-pulse h-6 bg-gray-200 rounded w-full" />
                         ))
                         : articles.slice(0, 3).map((article: Articles) => (
-                            <li key={article.id} className="">
-                                {article.title}
-                            </li>
+                            <Link  key={article.id} to={`/article/${article.id}`}>
+                                <li className="mb-1 hover:text-foreground hover:underline transition-all duration-300 ease-in-out cursor-pointer">
+                                    {article.title}
+                                </li>
+                            </Link>
                         ))
                     }
                 </ul>
@@ -41,7 +44,7 @@ export default function WhatsNew() {
                     {isLoadingProTips ? (
                         <div className="animate-pulse h-6 bg-gray-200 rounded w-full" />
                     ) : (
-                        <p className="text-lg font-normal">{proTips.title}</p>
+                        <Link to={`/protip/${proTips.id}`} className="text-lg font-normal hover:text-foreground hover:underline transition-all duration-300 ease-in-out cursor-pointer">{proTips.title}</Link>
                     )}
                 </div>
             </div>
